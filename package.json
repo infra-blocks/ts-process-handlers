@@ -1,16 +1,16 @@
 {
-  "name": "@infra-blocks/lib-template",
+  "name": "@infra-blocks/process-handlers",
   "version": "0.0.0",
-  "description": "This repository is a template to generate repositories meant to hold the source code of NPM packages written in TypeScript.",
+  "description": "Utilities for handling Node.js process signals gracefully.",
   "keywords": [
-    "template",
-    "typescript",
-    "esm",
-    "cjs"
+    "process",
+    "graceful",
+    "shutdown",
+    "node"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/infra-blocks/ts-lib-template.git"
+    "url": "https://github.com/infra-blocks/ts-process-handlers.git"
   },
   "license": "ISC",
   "author": "",
