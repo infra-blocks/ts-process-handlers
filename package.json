@@ -1,6 +1,6 @@
 {
   "name": "@infra-blocks/process-handlers",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Utilities for handling Node.js process signals gracefully.",
   "keywords": [
     "process",
