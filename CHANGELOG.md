@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
- 
+
+## [0.3.0] - 2025-07-03
+
+### Added
+
+- `initProcessHandlers` additionally hooks onto signals `SIGTERM` and `SIGINT` by 
+default. They simply dispatch to `gracefulShutdown` to create a more coherent experience.
+
 ## [0.2.0] - 2025-07-03
 
 ### Changed
