@@ -62,6 +62,7 @@ export class ShutdownWorker {
       new EventEmitter() as TypedEmitter.default<ShutdownWorkerEvents>;
   }
 
+  // TODO: include an optional timeout on shutdown handlers.
   /**
    * Adds a handler to run on shutdown.
    *
@@ -496,18 +497,25 @@ class ProcessHandlersImpl implements ProcessHandlers {
    * - uncaughtException
    * - unhandledRejection
    * - beforeExit
+   * and 2 signals:
+   * - SIGTERM
+   * - SIGINT
    *
-   * For the first too, the listener is an internal function that will make sure to run the shutdown handlers
-   * before terminating the process. It inevitably calls process.exit(1).
+   * For the first 2 events (programmatic errors), the listener is an internal function that will make sure to run
+   * the error and the shutdown handlers before terminating the process. It inevitably calls process.exit(1).
    *
    * The beforeExit handler just calls {@link gracefulShutdown}. This happens on normal execution when the event
    * loop has been exhausted.
+   *
+   * The 2 signals are handled the same way as the `beforeExit` event: they call {@link gracefulShutdown}.
    */
   hookOntoNodeProcess(): void {
     this.process.on("uncaughtException", (err) => this.crashShutdown(err));
     this.process.on("unhandledRejection", (err) => this.crashShutdown(err));
     // If we have emptied the event loop normally, we still run the shutdown handlers.
     this.process.on("beforeExit", () => this.gracefulShutdown());
+    this.process.on("SIGTERM", () => this.gracefulShutdown());
+    this.process.on("SIGINT", () => this.gracefulShutdown());
   }
 }
 
@@ -521,12 +529,17 @@ class ProcessHandlersImpl implements ProcessHandlers {
  * - uncaughtException
  * - unhandledRejection
  * - beforeExit
+ * and 2 signals:
+ * - SIGTERM
+ * - SIGINT
  *
- * For the first too, the listener is an internal function that will make sure to run the shutdown handlers
- * before terminating the process. It inevitably calls process.exit(1).
+ * For the first 2 events (programmatic errors), the listener is an internal function that will make sure to run
+ * the error and the shutdown handlers before terminating the process. It inevitably calls process.exit(1).
  *
  * The beforeExit handler just calls {@link gracefulShutdown}. This happens on normal execution when the event
  * loop has been exhausted.
+ *
+ * The 2 signals are handled the same way as the `beforeExit` event: they call {@link gracefulShutdown}.
  *
  * @param options.logger - The logger to use. Defaults to {@link console}
  * @param options.process - The Node.js process, defaults to {@link global.process}

@@ -233,11 +233,13 @@ describe("index", function () {
 
         // It should register on all three node events.
         const onCalls = processOn.getCalls();
-        expect(onCalls).to.have.length(3);
+        expect(onCalls).to.have.length(5);
         // The order doesn't matter, but that's how it is now.
         expect(onCalls[0].firstArg).to.equal("uncaughtException");
         expect(onCalls[1].firstArg).to.equal("unhandledRejection");
         expect(onCalls[2].firstArg).to.equal("beforeExit");
+        expect(onCalls[3].firstArg).to.equal("SIGTERM");
+        expect(onCalls[4].firstArg).to.equal("SIGINT");
         // It also registers on worker events, but we'll test that later.
       });
     });
