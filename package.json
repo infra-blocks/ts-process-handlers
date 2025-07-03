@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@infra-blocks/logger-interface": "^0.2.0",
-    "@infra-blocks/node-console-logger": "^0.1.0",
+    "@infra-blocks/null-logger": "^0.1.0",
     "@infra-blocks/types": "^0.6.0",
     "typed-emitter": "^2.1.0"
   },

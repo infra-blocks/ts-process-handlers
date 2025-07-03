@@ -2,7 +2,7 @@ import { EventEmitter } from "events";
 import TypedEmitter from "typed-emitter";
 import { ErrorHandler } from "@infra-blocks/types";
 import { Logger } from "@infra-blocks/logger-interface";
-import { ConsoleLogger } from "@infra-blocks/node-console-logger";
+import { NullLogger } from "@infra-blocks/null-logger";
 
 /**
  * A shutdown handler is an asynchronous function whose returned is not looked at.
@@ -168,7 +168,7 @@ export class ShutdownWorker {
   }
 
   static create(options?: { logger?: Logger }): ShutdownWorker {
-    const { logger = ConsoleLogger.create() } = options || {};
+    const { logger = NullLogger.create() } = options || {};
     return new ShutdownWorker({ logger });
   }
 }
@@ -225,7 +225,7 @@ export class ErrorWorker {
 
     // The default handler is to simply log using this class's logger.
     this.errorHandlers.set(DEFAULT_ERROR_HANDLER_NAME, (err) =>
-      logger.error("%s", err)
+      this.logger.error("%s", err)
     );
   }
 
@@ -338,7 +338,7 @@ export class ErrorWorker {
   }
 
   static create(options?: { logger?: Logger }): ErrorWorker {
-    const { logger = ConsoleLogger.create() } = options || {};
+    const { logger = NullLogger.create() } = options || {};
     return new ErrorWorker({ logger });
   }
 }
@@ -538,7 +538,7 @@ export function initProcessHandlers(options?: {
   shutdownWorker?: ShutdownWorker;
 }): ProcessHandlersImpl {
   const {
-    logger = ConsoleLogger.create(),
+    logger = NullLogger.create(),
     process = global.process,
     errorWorker = ErrorWorker.create({ logger }),
     shutdownWorker = ShutdownWorker.create({ logger }),
