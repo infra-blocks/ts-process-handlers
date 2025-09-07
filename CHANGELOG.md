@@ -34,4 +34,6 @@ Now, they are in sync.
 
 - First implementation of the process handlers!
 
+[0.3.0]: https://github.com/infra-blocks/ts-process-handlers/releases/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/infra-blocks/ts-process-handlers/releases/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/infra-blocks/ts-process-handlers/releases/tag/v0.1.0
